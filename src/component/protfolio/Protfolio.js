@@ -1,42 +1,67 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProtfolioList from "../protfolioList/ProtfolioList";
 import "./protfolio.scss";
+import {
+    featuredPortfolio,
+    webPortfolio,
+    mobilePortfolio,
+    designPortfolio,
+    contentPortfolio,
+} from "../data";
 
 export default function Protfolio() {
-    const [selected, setSelected] = useState('featured')
+    const [selected, setSelected] = useState("featured");
+    const [data, setData] = useState([]);
     const list = [
         {
             id: "featured",
             title: "Featured",
-
         },
-
         {
             id: "web",
             title: "Web App",
-
         },
         {
             id: "mobile",
             title: "Mobile App",
-
         },
         {
             id: "design",
             title: "Design",
-
         },
         {
             id: "content",
             title: "Content",
-
         },
-    ];
+    ]; 
+    useEffect(() => {
+        switch (selected) {
+            case "featured":
+                setData(featuredPortfolio);
+                break;
+            case "web":
+                setData(webPortfolio);
+                break;
+            case "mobile":
+                setData(mobilePortfolio);
+                break;
+            case "design":
+                setData(designPortfolio);
+                break;
+            case "content":
+                setData(contentPortfolio);
+                break;
+            default:
+                setData(featuredPortfolio);
+        }
+    }, [selected]);
+
     return (
 
         <div className='protfolio' id='protfolio'>
             <h1>protfolio</h1>
             <ul>
+
                 {list.map((item) => (
                     <ProtfolioList
                         title={item.title}
@@ -46,39 +71,17 @@ export default function Protfolio() {
                 ))}
             </ul>
             <div className="container">
-                <div className="item">
-                    <img src="https://tse1.mm.bing.net/th?id=OIP.EgRuBTZjmGGV9qwSGqswewHaEJ&pid=Api&P=0&w=292&h=164" alt="Box office" />
-                    <h3>Boxoffice App</h3>
-                </div>
+                {data.map((d) => (
+                    <div className="item">
+                        <img
+                            src={d.img}
+                            alt=""
+                        />
+                        <h3>{d.title}</h3>
 
-                <div className="item">
-                    <img src="https://tse1.mm.bing.net/th?id=OIP.EgRuBTZjmGGV9qwSGqswewHaEJ&pid=Api&P=0&w=292&h=164" alt="Box office" />
-                    <h3>Boxoffice App</h3>
-                </div>
-                <div className="item">
-                    <img src="https://tse1.mm.bing.net/th?id=OIP.EgRuBTZjmGGV9qwSGqswewHaEJ&pid=Api&P=0&w=292&h=164" alt="Box office" />
-                    <h3>Boxoffice App</h3>
-                </div>
+                    </div>
+                ))}
             </div>
-
-            <div className="container">
-                <div className="item">
-                    <img src="https://tse1.mm.bing.net/th?id=OIP.EgRuBTZjmGGV9qwSGqswewHaEJ&pid=Api&P=0&w=292&h=164" alt="Box office" />
-                    <h3>Boxoffice App</h3>
-                </div>
-
-                <div className="item">
-                    <img src="https://tse1.mm.bing.net/th?id=OIP.EgRuBTZjmGGV9qwSGqswewHaEJ&pid=Api&P=0&w=292&h=164" alt="Box office" />
-                    <h3>Boxoffice App</h3>
-                </div>
-                <div className="item">
-                    <img src="https://tse1.mm.bing.net/th?id=OIP.EgRuBTZjmGGV9qwSGqswewHaEJ&pid=Api&P=0&w=292&h=164" alt="Box office" />
-                    <h3>Boxoffice App</h3>
-                </div>
-
-            </div>
-
-
         </div>
-    )
+    );
 }
